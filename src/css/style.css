@@ -1,0 +1,41 @@
+.board1 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 470px;
+    justify-content: center;
+    align-items: center;
+}
+
+.board2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 620px;
+    justify-content: center;
+    align-items: center;
+}
+
+.board3 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.sqr {
+    width: 75px;
+    height: 75px;
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+

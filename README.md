@@ -1,10 +1,10 @@
 # Match-3 - Core mechanics only
 
 ## MVP
-- Dynamic game board. (Generates game boards of n x n)
-- Generates randomly placed tiles.
-- Select and swap tiles.
-- Check for matches of 3 or more and remove them. If no matches are found, reduce move/turn count by 1 and revert swapped tiles. 
+- Game board with size option for difficulty scaling. (Generates game boards of different sizes)
+- Generates randomly placed tiles. 
+- Select and swap selected tiles.
+- Check for matches of 3 or more and remove matched tiles. If no matches are found, reduce move/turn count by 1 and return swapped tiles to their original positions. 
 - Drops randomly generated tiles into the empty spaces.
 - Include manual shuffle.
 - Counts score up to a goal which triggers a `Victory` condition
@@ -13,10 +13,10 @@
 ## User Stories
 As a user, I want to:
 1. See a starting page where I am able to select the size of the board and the number of different tiles.
-2. See a clear grid with randomized tiles.
-3. Click one tile and then an adjacent tile to swap their positions.
-4. See tiles go back to their original positions if the swapped tiles do not result in 3 or more matching tiles.
-5. See matched tiles (3 or more) in rows and/or columns disappear adding to my total points.
+2. See a grid with randomized tiles.
+3. Click on two adjacent tiles and swap their positions. 
+4. Clearly see the tiles I have selected.
+5. See 3 or more matched tiles in rows and/or columns disappear while adding to my total points.
 6. See random tiles to fall from the top of the grid to fill any empty spaces left behind by matched tiles.
 7. See chain reactions caused by the falling tiles that create matches of 3 or more.
 8. See my total points and points required for a victory condition.
@@ -25,11 +25,12 @@ As a user, I want to:
 11. See a “Victory” screen if I clear the stage by reaching a specified point requirement.
 12. See a “Game Over” screen if I run out of moves.
 13. Be able to restart the game from the “Victory”, “Game Over” and game screens by clicking a restart button.
+14. See tiles go back to their original positions if the swapped tiles do not result in 3 or more matching tiles.
 
 
 ## Lo-fi Wireframes
 ### Normal Game loop
-**Normal gameplay loop:** Select board size > Select number of pieces > swap 2 tiles for a match 3 (or more) condition, clearing tiles > random tiles fall down from above to fill the space > chained matches cause more tiles to disappear > more random tiles fall from above to fill the space. > repeat until victory or game over condition is met.
+**Normal gameplay loop:** Select board size > Select number of pieces > swap 2 tiles and check for a match 3 (or more) condition, clearing matched tiles > random tiles fall down from above to fill the space > chained matches cause more tiles to disappear > more random tiles fall from above to fill the space. > repeat until victory or game over condition is met.
 
 Select Board Size
 
@@ -77,3 +78,6 @@ Mismatch
 Return tiles to original positions
 
 ![An image of swapped tiles returning to their original positions.](/img/4a.1-Return-tiles-to-original-positions.png)
+
+## References 
+

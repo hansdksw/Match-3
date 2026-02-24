@@ -32,39 +32,48 @@ As a user, I want to:
 **Normal gameplay loop:** Select board size > Select number of pieces > swap 2 tiles for a match 3 (or more) condition, clearing tiles > random tiles fall down from above to fill the space > chained matches cause more tiles to disappear > more random tiles fall from above to fill the space. > repeat until victory or game over condition is met.
 
 Select Board Size
-![An image of the title screen showing three board size options.](/img/1. Select Board Size)
+
+![An image of the title screen showing three board size options.](/img/1-Select-Board-Size.png)
 
 Select number of tiles
-![An image of the second screen showing the board size selected and three options for selecting number of tile types.](/img/2. Select number of tiles)
+
+![An image of the second screen showing the board size selected and three options for selecting number of tile types.](/img/2-Select-number-of-tiles.png)
 
 GAME START
-![An image of the initialized game board.](/img/3. GAME START)
+
+![An image of the initialized game board.](/img/3-GAME-START.png)
 
 Swap 2 tiles to match 3 - tiles disappear
-![An image of tiles swapped resulting in a match of 3 tiles. Matched tiles are removed.](/img/4. Swap 2 tiles to match 3 - tiles disappear)
+
+![An image of tiles swapped resulting in a match of 3 tiles. Matched tiles are removed.](/img/4-Swap-2-tiles-to-match-3-tiles-disappear.png)
 
 Chain into a match 4 condition (top tiles move down into empty spaces)
 ![An image of of a chained match condition resulting in a match of 4.](/img/5. Chain into a match 4 condition (top tiles move down into empty spaces))
 
 Match 4 - tiles disappear
-![An image of the 4 matched tiles being removed.](/img/6. Match 4 - tiles disappear)
+
+![An image of the 4 matched tiles being removed.](/img/6-Match-4-tiles-disappear.png)
 
 New tiles come in from above and fill empty spaces
-![An image of new random tiles coming into frame from above, filling the empty spaces.](/img/7. New tiles come in from above and fill empty spaces)
+![An image of new random tiles coming into frame from above, filling the empty spaces.](/img/7-New-tiles-come-in-from-above-and-fill-empty-spaces.png)
 
 
 ### Victory Condition
-![An image of the Victory screen](/img/8. Victory condition)
+
+![An image of the Victory screen](/img/8-Victory-condition.png)
 
 
 ### Game Over Condition
-![An image of the Game Over screen](/img/8a. Game over condition met)
+
+![An image of the Game Over screen](/img/8a-Game-over-condition-met.png)
 
 
 ### Mismatch Condition
 **Mismatch condition met:** tiles are swapped back to their original positions.
 Mismatch
-![An image of swapped tiles resulting in a mismatch and reduced turn count.](/img/4a. Mismatch)
+
+![An image of swapped tiles resulting in a mismatch and reduced turn count.](/img/4a-Mismatch.png)
 
 Return tiles to original positions
-![An image of swapped tiles returning to their original positions.](/img/4a.1. Return tiles to original positions)
+
+![An image of swapped tiles returning to their original positions.](/img/4a.1-Return-tiles-to-original-positions.png)

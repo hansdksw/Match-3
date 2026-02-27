@@ -1,6 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
 
-const { collapseTextChangeRangesAcrossMultipleVersions } = require("typescript");
 const tileColor = ["red", "green", "blue", "yellow", "purple"];
 const squares = [];
 
@@ -10,68 +9,45 @@ let tileSelection = 5; //? To do: to fix tile selection
 let tileCount;
 let selectedTile;
 let targetTile;
+let selectedTileStored;
+let targetTileStored;
+let tileSwapStateTest = false;
+
+
 
 /*------------------------ Cached Element References ------------------------*/
 
 const board = document.querySelector(".board-container");
-let selectedTileStored;
-let targetTileStored;
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-// const clickSquare = document.querySelectorAll(".sqr"); //select element caught a syntax error which made me realize this is a redundant line
-
 const handleSquareClick = (event) => {
-  console.log(`clicked ${event.target.id}`); //? check
+
+  //Safety Check
+  if (!event.target.classList.contains("sqr")) {
+    return;
+  }
+
+  console.log(`clicked ${event.target.id}`); 
+
   if (selectedTile === undefined && targetTile === undefined) {
-    selectedTile = event.target.id;
+    selectedTile = parseInt(event.target.id);
     console.log(selectedTile);
     console.log(targetTile);
     
   } else if (selectedTile !== undefined && targetTile === undefined) {  
-    targetTile = event.target.id;
+    targetTile = parseInt(event.target.id);
     console.log(selectedTile);
-    console.log(targetTile);
+    console.log(targetTile); 
     
-  } else {
+    tileSwap(selectedTile, targetTile);
+    // console.log(squares);
+
     //reset
     selectedTile = undefined;
     targetTile = undefined;
   }
 };
-
-// if (selectedTile !== undefined && targetTile !== undefined) {
-//   tileSwap(squares, selectedTile , targetTile);
-//   console.log(squares);
-
-//   //reset states
-//   selectedTile = undefined;
-//   targetTile = undefined;
-    
-// }
-
-
-  
-const tileSwapTest = document.querySelector(".restart-button-2");
-
-tileSwapTest.addEventListener("click", () => {
-  if (selectedTile !== undefined && targetTile !== undefined) {
-    tileSwapStateTest = false;
-    tileSwap(squares, selectedTile , targetTile);
-  console.log(squares);
-
-  //reset states
-  selectedTile = undefined;
-  targetTile = undefined;
-  }  
-});
-
-
-
-
-
-console.log(selectedTile);
-console.log(targetTile);
 
 board.addEventListener("click", handleSquareClick);
 
@@ -96,38 +72,20 @@ const drawBoard = (boardSize) => {
   }
   board.appendChild(fragment);
 };
-
-
-// const drawBoard = (boardSize) => {
-  //     board.style.width = `${(50 + 2) * boardSize}px`;
-  
-  //     // Removed the DocumentFragment lines
-  
-  //     for (let i = 0; i < boardSize ** 2; i++) {
-    //         const square = document.createElement("div");
-    //         square.classList.add("sqr");
-    //         square.setAttribute("id", i);
     
-    //         // Append directly to the board instead of the fragment
-    //         board.appendChild(square); 
-    //         squares.push(square);
-    //       }
-//     };
+drawBoard(4); //! change board size here
 
-    
-drawBoard(12); //! change board size here
-
-//randomizing the tiles on the board
-const randomizeTiles = () => { //figure out how to ensure less than 3 in adjacent spots
+// randomizing the tiles on the board
+const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjacent spots
   squares.forEach((square) => {
     const randomTile = Math.floor(Math.random() * tileCount.length);
     square.style.backgroundColor = tileColor[randomTile];
   });
 };
 
-randomizeTiles();
+console.log(squares[1].dataset.value)
 
-// //! FOR TESTING
+
 
 let restartButtonState = false;
   
@@ -144,35 +102,31 @@ restartButtonElement.addEventListener("click", () => {
 
 
 
-//swap logic
-
 //? input > data swap > check for matches
-//function for swapping:
 
 //! if selectedTile + 1 (horizontal) || selectedTile - 1 (horizontal) || selectedTile + ?? (vertical) || selectedTile - ?? (vertical)
-const testArr = ["a","b","c","d","e","f","g","h","i"]
 
-console.log(testArr);
+//function for swapping:
 
-const tileSwap = (squares, selectedTile, targetTile) => {
-  [squares[selectedTile], squares[targetTile]] = [squares[selectedTile], squares[targetTile]];
-  
-};
+const tileSwap = (id1, id2) => {
+  const selectedElement = squares[id1];
+  const targetElement = squares[id2];
 
+  if (!selectedElement || !targetElement) {
+    console.error(`Could not find tiles at indices ${id1} or ${id2}`);
+    return;
+  }
 
+  if (selectedElement && targetElement) {
+    // [squares[selectedTile], squares[targetTile]] = [squares[selectedTile], squares[targetTile]]; //! this only swaps the elements in the array but does not update the backgroundColor
+    const tempColor = selectedElement.style.backgroundColor;
 
-// let tileSwapStateTest = false;
-  
-// const tileSwapTest = document.querySelector(".restart-button-2");
-  
-// tileSwapTest.addEventListener("click", () => {
-//   if (tileSwapStateTest === true) {
-//     tileSwapStateTest = false;
-//   }
-//   tileSwap(testArr, selectedTileStored , targetTileStored);
-//   console.log(testArr)
+    selectedElement.style.backgroundColor = targetElement.style.backgroundColor;
+    targetElement.style.backgroundColor = tempColor;
 
-// });
+    console.log(`Swapped colors ${id1} with ${id2}`);
+  }
+}
 
 
 

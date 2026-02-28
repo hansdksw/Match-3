@@ -44,8 +44,10 @@ const handleSquareClick = (event) => {
     console.log(selectedTile);
     console.log(targetTile); 
     
-    isMatch(selectedTile); 
     tileSwap(selectedTile, targetTile);
+    
+    isMatch(selectedTile);
+    isMatch(targetTile); 
 
     //reset
     selectedTile = undefined;
@@ -59,7 +61,7 @@ board.addEventListener("click", handleSquareClick);
 
 tileCount = tileColor.slice(0, tileSelection);
 
-// function for drawing dynamic game board
+//function for drawing dynamic game board
 const drawBoard = (size) => {
   boardSize = size;
 
@@ -82,7 +84,7 @@ const drawBoard = (size) => {
     
 drawBoard(6); //! change board size here
 
-// function for randomizing the tiles on the board
+//function for randomizing the tiles on the board
 const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjacent spots
   squares.forEach((square) => {
     const randomTile = Math.floor(Math.random() * tileCount.length);
@@ -93,6 +95,7 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
 
 const restartButtonElement = document.querySelector(".restart-button-1");
   
+//restart
 restartButtonElement.addEventListener("click", () => {
   if (restartButtonState === true) {
     restartButtonState = false;
@@ -108,8 +111,7 @@ restartButtonElement.addEventListener("click", () => {
 
 //! if selectedTile + 1 (horizontal) || selectedTile - 1 (horizontal) || selectedTile + ?? (vertical) || selectedTile - ?? (vertical)
 
-//function for swapping:
-
+//function for swapping
 const tileSwap = (id1, id2) => {
   const selectedElement = squares[id1];
   const targetElement = squares[id2];
@@ -125,8 +127,8 @@ const tileSwap = (id1, id2) => {
   } else {
     console.log("Invalid Move")
   }
-  
 }
+
 //axis & boundary check
 const bounds = (id1,id2,boardSize) => {  //! separated boundary checks from swap function for reusability
 
@@ -140,17 +142,66 @@ const bounds = (id1,id2,boardSize) => {  //! separated boundary checks from swap
   return isVerticallyAdjacent || isHorizontallyAdjacent;
 }
 
-// function for checking match condition:
-const isMatch = (id1) => {
-
-  const selectedElement = squares[id1];
+//function for checking match condition
+const isMatch = (id) => {
+  const selectedElement = squares[id];
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
   
-  console.log(`the color tile selected is ${referenceTile}`); //check 
+  console.log(`the color tile selected is ${referenceTile}`); //check
+  
+  const direction = (step) => {
+    let currentTile = id + step;
+    let previousTile = id;
+    let matchedId = [];
+ 
+    while (squares[currentTile]) {
+      
+      if (!bounds(previousTile, currentTile, boardSize)) break;
+
+      const currentColor = window.getComputedStyle(squares[currentTile]).backgroundColor;
+      if (currentColor !== referenceTile) break;
+
+      matchedId.push(currentTile);
+      previousTile = currentTile;
+      currentTile += step;
+    }
+    return matchedId;
+  };
+
+  // direction check
+  const leftId = direction(-1);
+  const rightId = direction(1);
+  const upId = direction(-boardSize);
+  const downId = direction(boardSize);
+
+  //combine horizontal and vertical matched into horizontal and vertical arrays
+  const horizontalMatch = [id , ...leftId , ...rightId];
+  const verticalMatch = [id , ...upId , ...downId];
+
+ 
+  //to receive id of matched tiles
+  let clear = []; 
+
+  //clear horizontally matched tiles
+  if (horizontalMatch.length >= 3) {
+    clear = [ ...clear, ...horizontalMatch];
+  } 
+    
+  //clear vertically matched tiles
+  else if (verticalMatch.length >= 3) {
+    clear = [ ...clear, ...verticalMatch];
+  }
+
+  //filter to remove repeats
+  const uniqueTilesToClear = clear.filter((value, index) => {
+    return clear.indexOf(value) === index;
+  });
+    
+  //clear tiles
+  uniqueTilesToClear.forEach(tileId => {
+    squares[tileId].style.backgroundColor = "transparent"; 
+  });
 
 }
   
-  
-
-
   

@@ -12,7 +12,8 @@ let targetTile;
 let selectedTileStored;
 let targetTileStored;
 let tileSwapStateTest = false;
-
+let restartButtonState = false;
+  
 let boardSize = 0;
 
 
@@ -43,8 +44,8 @@ const handleSquareClick = (event) => {
     console.log(selectedTile);
     console.log(targetTile); 
     
+    isMatch(selectedTile); 
     tileSwap(selectedTile, targetTile);
-    // console.log(squares);
 
     //reset
     selectedTile = undefined;
@@ -75,6 +76,7 @@ const drawBoard = (size) => {
     fragment.appendChild(square); //DocumentFragment to speed up grid generation time https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment/append
     squares.push(square);
   }
+  
   board.appendChild(fragment);
 };
     
@@ -88,12 +90,7 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
   });
 };
 
-console.log(squares[1].dataset.value)
 
-
-
-let restartButtonState = false;
-  
 const restartButtonElement = document.querySelector(".restart-button-1");
   
 restartButtonElement.addEventListener("click", () => {
@@ -116,35 +113,44 @@ restartButtonElement.addEventListener("click", () => {
 const tileSwap = (id1, id2) => {
   const selectedElement = squares[id1];
   const targetElement = squares[id2];
-
+  
   if (!selectedElement || !targetElement) return;
 
+   if (bounds(id1,id2,boardSize)) {
+    const tempColor = selectedElement.style.backgroundColor;
+    selectedElement.style.backgroundColor = targetElement.style.backgroundColor;
+    targetElement.style.backgroundColor = tempColor;
+    
+    console.log(`Swapped colors ${id1} with ${id2}`);
+  } else {
+    console.log("Invalid Move")
+  }
+  
+}
+//axis & boundary check
+const bounds = (id1,id2,boardSize) => {  //! separated boundary checks from swap function for reusability
 
-  const row1 = Math.floor(id1/boardSize);
-  const row2 = Math.floor(id2/boardSize);
+  const row1 = Math.floor(id1 / boardSize);
+  const row2 = Math.floor(id2 / boardSize);
   const col1 = id1 % boardSize;
   const col2 = id2 % boardSize;
   
   const isVerticallyAdjacent = col1 === col2 && Math.abs(row1 - row2) === 1;
   const isHorizontallyAdjacent = row1 === row2 && Math.abs(col1 - col2) === 1;
-
-  if (isVerticallyAdjacent || isHorizontallyAdjacent) {
-    const tempColor = selectedElement.style.backgroundColor;
-    selectedElement.style.backgroundColor = targetElement.style.backgroundColor;
-    targetElement.style.backgroundColor = tempColor;
-  
-    console.log(`Swapped colors ${id1} with ${id2}`);
-  } else {
-    console.log("Invalid Move")
-  }
-
+  return isVerticallyAdjacent || isHorizontallyAdjacent;
 }
 
 // function for checking match condition:
-const isMatch = () => {
+const isMatch = (id1) => {
+
+  const selectedElement = squares[id1];
+  const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
+  
+  console.log(`the color tile selected is ${referenceTile}`); //check 
 
 }
+  
+  
 
 
-
-
+  

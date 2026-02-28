@@ -44,10 +44,11 @@ const handleSquareClick = (event) => {
     console.log(selectedTile);
     console.log(targetTile); 
     
-    tileSwap(selectedTile, targetTile);
-    
-    isMatch(selectedTile);
-    isMatch(targetTile); 
+    tileSwap(selectedTile, targetTile);    
+
+    if (!isMatch(selectedTile) && !isMatch(targetTile)) {
+      tileSwap(selectedTile, targetTile);
+    }
 
     //reset
     selectedTile = undefined;
@@ -92,7 +93,6 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
   });
 };
 
-
 const restartButtonElement = document.querySelector(".restart-button-1");
   
 //restart
@@ -103,13 +103,6 @@ restartButtonElement.addEventListener("click", () => {
   randomizeTiles();
   console.log("restart!");
 });
-
-
-
-
-//? input > data swap > check for matches
-
-//! if selectedTile + 1 (horizontal) || selectedTile - 1 (horizontal) || selectedTile + ?? (vertical) || selectedTile - ?? (vertical)
 
 //function for swapping
 const tileSwap = (id1, id2) => {
@@ -156,11 +149,13 @@ const isMatch = (id) => {
  
     while (squares[currentTile]) {
       
-      if (!bounds(previousTile, currentTile, boardSize)) break;
+      if (!bounds(previousTile, currentTile, boardSize)) 
+        break;
 
       const currentColor = window.getComputedStyle(squares[currentTile]).backgroundColor;
-      if (currentColor !== referenceTile) break;
-
+      if (currentColor !== referenceTile) 
+        break;
+      
       matchedId.push(currentTile);
       previousTile = currentTile;
       currentTile += step;
@@ -201,7 +196,19 @@ const isMatch = (id) => {
   uniqueTilesToClear.forEach(tileId => {
     squares[tileId].style.backgroundColor = "transparent"; 
   });
-
+  return uniqueTilesToClear.length > 0; //truthy if tiles are cleared
 }
   
-  
+//initializes board
+randomizeTiles();
+
+```TO DO:
+    1. gravity, new random tiles
+    2. randomize without >3 in rows or columns
+    3. DOM
+    4. clean up css
+    5. animation of swapping and swapping back if match fails
+
+    stretch goals:
+    1. manual hints - player initiated
+```

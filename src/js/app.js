@@ -44,9 +44,12 @@ const handleSquareClick = (event) => {
     console.log(selectedTile);
     console.log(targetTile); 
     
-    tileSwap(selectedTile, targetTile);    
+    tileSwap(selectedTile, targetTile); 
+    
+    const match1 = isMatch(selectedTile);
+    const match2 = isMatch(targetTile); 
 
-    if (!isMatch(selectedTile) && !isMatch(targetTile)) {
+    if (!match1 && !match2) {
       tileSwap(selectedTile, targetTile);
     }
 
@@ -202,13 +205,13 @@ const isMatch = (id) => {
 //initializes board
 randomizeTiles();
 
-```TO DO:
-    1. gravity, new random tiles
-    2. randomize without >3 in rows or columns
-    3. DOM
-    4. clean up css
-    5. animation of swapping and swapping back if match fails
+// ```TO DO:
+//     1. gravity, new random tiles
+//     2. randomize without >3 in rows or columns
+//     3. DOM
+//     4. clean up css
+//     5. animation of swapping and swapping back if match fails
 
-    stretch goals:
-    1. manual hints - player initiated
-```
+//     stretch goals:
+//     1. manual hints - player initiated
+// ```

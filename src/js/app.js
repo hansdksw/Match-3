@@ -64,6 +64,9 @@ const handleSquareClick = (event) => {
     if (!match1 && !match2) {
       console.log("No matches found");
       tileSwap(selectedTile, targetTile);
+    } else {
+      //for chaining
+      setTimeout(processBoard, 300); //delay for cascading effect
     }
   
     //reset
@@ -111,7 +114,7 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
 
 const restartButtonElement = document.querySelector(".restart-button-1");
   
-//restart
+//function for restarting the game
 restartButtonElement.addEventListener("click", () => {
   if (restartButtonState === true) {
     restartButtonState = false;
@@ -215,17 +218,87 @@ const isMatch = (id) => {
   });
   return uniqueTilesToClear.length > 0; //truthy if tiles are cleared
 }
+
+//UPDATE: function for transparency check in gravity to be more reliable
+const isHole = (element) => {
+  const color = element.style.backgroundColor;
+  return color === "transparent" || color === "rgba(0, 0, 0, 0)" || color === "";
+}
+
+//function for gravity
+const gravity = () => {
+  let cascade = true;
+
+  //keeps running till no empty tiles are found
+  while (cascade) {
+    cascade = false;
+
+    //need to run the for loop in reverse to scan the board from the bottom up to implement 'gravity'
+    for (let i = squares.length - 1 ; i >= 0 ; i--) {
+      const currentTile = squares[i];
+
+      //check for cleared tiles
+      if (currentTile.style.backgroundColor === "transparent"){
+        
+        if (isHole(currentTile)) {
+          
+          //for 'tiles' that come before the start of the array (all spaces above the board)
+          if (i < boardSize) {
+            const randomTile = tileColor[Math.floor(Math.random() * tileColor.length)]
+            currentTile.style.backgroundColor = randomTile;
+            cascade = true;
+          }
+  
+          else {
+            const tileAbove = squares[i - boardSize];
+            
+            //check for transparent tiles and cascade
+            if (tileAbove.style.backgroundColor !== "transparent") {
+              currentTile.style.backgroundColor =  tileAbove.style.backgroundColor;
+              tileAbove.style.backgroundColor = "transparent";
+              cascade = true;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//another global match check created to deal with gravity
+const matchCheck = () => {
+  let hasMatches = false;
+
+  for (let i = 0 ; i < squares.length; i++) {
+    if (isMatch(i)) {
+      hasMatches = true;
+    }
+  }
+  return hasMatches;
+}
+
+//scan and process game board using gravity and match check.
+const processBoard = () => {
+  gravity();
+  
+  const newMatches = matchCheck();
+
+  if (newMatches) {
+    setTimeout(processBoard, 300); //delay for cascading effect
+  }
+}
+
   
 //initializes board
 randomizeTiles();
 
-// TO DO:
-//     1. gravity for existing tiles, board repopulation with new random tiles
-//     2. randomize without >3 in rows or columns during initialization
-//     3. DOM for start screen, victory and game over screens.
-//     4. clean up css styling 
-//     5. animation of swapping and swapping back if match fails
+//  TO DO:
+//    1. scoring and turns left for MVP
+//    2. randomize without >3 in rows or columns during initialization
+//    3. DOM for start screen, victory and game over screens.
+//    4. clean up css styling 
+//    5. animation of swapping and swapping back if match fails
+//    6. manual hints - player initiated
 
-//     stretch goals:
-//     1. manual hints - player initiated
-// 
+//  stretch goals:
+//    7. auto shuffle when out of possible moves

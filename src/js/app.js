@@ -13,7 +13,10 @@ let selectedTileStored;
 let targetTileStored;
 let tileSwapStateTest = false;
 let restartButtonState = false;
+let horizontalScore = 0;
+let verticalScore = 0;
 let boardSize = 0;
+let score = 0;
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -151,6 +154,12 @@ const bounds = (id1,id2,boardSize) => {
 //function for checking match condition
 const isMatch = (id) => {
   const selectedElement = squares[id];
+
+  //stops isMatch from counting cleared tiles
+  if (selectedElement.style.backgroundColor === "transparent" || selectedElement.style.backgroundColor === "") {
+    return false;
+  }
+
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
   
   // console.log(`the color tile selected is ${referenceTile}`); //check
@@ -183,7 +192,7 @@ const isMatch = (id) => {
   const upId = direction(-boardSize);
   const downId = direction(boardSize);
 
-  //combine horizontal and vertical matched into horizontal and vertical arrays
+  //combine horizontal and vertical matched tiles into horizontal and vertical arrays
   const horizontalMatch = [id , ...leftId , ...rightId];
   const verticalMatch = [id , ...upId , ...downId];
 
@@ -197,20 +206,28 @@ const isMatch = (id) => {
   } 
     
   //clear vertically matched tiles
- if (verticalMatch.length >= 3) { //else was breaking the vertical match check by stopping the function if a horizontal match was detected.
+  if (verticalMatch.length >= 3) { 
     clear = [ ...clear, ...verticalMatch];
   }
+
 
   //filter to remove repeats
   const uniqueTilesToClear = clear.filter((value, index) => {
     return clear.indexOf(value) === index;
   });
+
+  //score counter
+  if (uniqueTilesToClear.length > 0) {
+    score += uniqueTilesToClear.length;
+    console.log(`Score: ${score}`); //check
     
-  //clear tiles
-  uniqueTilesToClear.forEach(tileId => {
-    squares[tileId].style.backgroundColor = "transparent"; 
-  });
-  return uniqueTilesToClear.length > 0; //truthy if tiles are cleared
+    //clear tiles
+    uniqueTilesToClear.forEach(tileId => {
+      squares[tileId].style.backgroundColor = "transparent"; 
+    });
+    return uniqueTilesToClear.length > 0; 
+  }
+  return false;
 }
 
 //UPDATE: function for transparency check in gravity to be more reliable

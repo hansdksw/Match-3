@@ -13,10 +13,7 @@ let selectedTileStored;
 let targetTileStored;
 let tileSwapStateTest = false;
 let restartButtonState = false;
-  
 let boardSize = 0;
-
-
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -32,10 +29,7 @@ const handleSquareClick = (event) => {
     return;
   }
   // console.log(`clicked ${event.target.id}`); 
-  
-  
-  
-  
+
   if (selectedTile === undefined && targetTile === undefined) {
     selectedTile = parseInt(event.target.id);
     // console.log(selectedTile);

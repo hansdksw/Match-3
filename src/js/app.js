@@ -41,8 +41,8 @@ const handleSquareClick = (event) => {
     
   } else if (selectedTile !== undefined && targetTile === undefined) {  
     targetTile = parseInt(event.target.id);
-    console.log(selectedTile);
-    console.log(targetTile); 
+    // console.log(selectedTile);
+    // console.log(targetTile); 
     
     tileSwap(selectedTile, targetTile); 
     
@@ -50,6 +50,7 @@ const handleSquareClick = (event) => {
     const match2 = isMatch(targetTile); 
 
     if (!match1 && !match2) {
+      console.log("No matches found");
       tileSwap(selectedTile, targetTile);
     }
 
@@ -186,7 +187,7 @@ const isMatch = (id) => {
   } 
     
   //clear vertically matched tiles
-  else if (verticalMatch.length >= 3) {
+ if (verticalMatch.length >= 3) { //else was breaking the vertical match check by stopping the function if a horizontal match was detected.
     clear = [ ...clear, ...verticalMatch];
   }
 

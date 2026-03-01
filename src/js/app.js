@@ -219,13 +219,13 @@ const isMatch = (id) => {
 //initializes board
 randomizeTiles();
 
-// ```TO DO:
-//     1. gravity, new random tiles
-//     2. randomize without >3 in rows or columns
-//     3. DOM
-//     4. clean up css
+// TO DO:
+//     1. gravity for existing tiles, board repopulation with new random tiles
+//     2. randomize without >3 in rows or columns during initialization
+//     3. DOM for start screen, victory and game over screens.
+//     4. clean up css styling 
 //     5. animation of swapping and swapping back if match fails
 
 //     stretch goals:
 //     1. manual hints - player initiated
-// ```
+// 

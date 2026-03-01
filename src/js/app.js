@@ -31,29 +31,41 @@ const handleSquareClick = (event) => {
   if (!event.target.classList.contains("sqr")) {
     return;
   }
-
-  console.log(`clicked ${event.target.id}`); 
-
+  // console.log(`clicked ${event.target.id}`); 
+  
+  
+  
+  
   if (selectedTile === undefined && targetTile === undefined) {
     selectedTile = parseInt(event.target.id);
-    console.log(selectedTile);
-    console.log(targetTile);
+    // console.log(selectedTile);
+    // console.log(targetTile);
     
-  } else if (selectedTile !== undefined && targetTile === undefined) {  
+  } else if (selectedTile !== undefined && targetTile === undefined) { 
     targetTile = parseInt(event.target.id);
     // console.log(selectedTile);
     // console.log(targetTile); 
     
+    const selectedColor = window.getComputedStyle(squares[selectedTile]).backgroundColor;
+    const targetColor = window.getComputedStyle(squares[targetTile]).backgroundColor;
+
+    if (selectedColor === targetColor) {
+      console.log("Invalid Move");
+      selectedTile = undefined;
+      targetTile = undefined;
+      return;
+    } 
+  
     tileSwap(selectedTile, targetTile); 
-    
+  
     const match1 = isMatch(selectedTile);
     const match2 = isMatch(targetTile); 
-
+  
     if (!match1 && !match2) {
       console.log("No matches found");
       tileSwap(selectedTile, targetTile);
     }
-
+  
     //reset
     selectedTile = undefined;
     targetTile = undefined;
@@ -115,19 +127,19 @@ const tileSwap = (id1, id2) => {
   
   if (!selectedElement || !targetElement) return;
 
-   if (bounds(id1,id2,boardSize)) {
+  if (bounds(id1,id2,boardSize)) {
     const tempColor = selectedElement.style.backgroundColor;
     selectedElement.style.backgroundColor = targetElement.style.backgroundColor;
     targetElement.style.backgroundColor = tempColor;
     
-    console.log(`Swapped colors ${id1} with ${id2}`);
+    // console.log(`Swapped colors ${id1} with ${id2}`);
   } else {
     console.log("Invalid Move")
   }
 }
 
-//axis & boundary check
-const bounds = (id1,id2,boardSize) => {  //! separated boundary checks from swap function for reusability
+//axis & boundary check - separated boundary checks from swap function for reusability
+const bounds = (id1,id2,boardSize) => { 
 
   const row1 = Math.floor(id1 / boardSize);
   const row2 = Math.floor(id2 / boardSize);
@@ -144,12 +156,13 @@ const isMatch = (id) => {
   const selectedElement = squares[id];
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
   
-  console.log(`the color tile selected is ${referenceTile}`); //check
+  // console.log(`the color tile selected is ${referenceTile}`); //check
   
   const direction = (step) => {
     let currentTile = id + step;
     let previousTile = id;
     let matchedId = [];
+
  
     while (squares[currentTile]) {
       

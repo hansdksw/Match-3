@@ -17,7 +17,10 @@ let horizontalScore = 0;
 let verticalScore = 0;
 let boardSize = 0;
 let score = 0;
+<<<<<<< HEAD
 let moves = 20;
+=======
+>>>>>>> refs/remotes/origin/main
 
 /*------------------------ Cached Element References ------------------------*/
 

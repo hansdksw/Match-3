@@ -3,67 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="src/css/style.css" />
+    <link rel="stylesheet" href="./src/css/style.css" />
     <script defer src="src/js/app.js"></script>
     <title>Match-3</title>
   </head>
   <body>
-    <section>
-      <h1 class="title">Match-3</h1>
-      <h2>Customize Difficulty</h2>
-      <label for="board-size">Select board size:</label>
-      <select name = "board-size" id = "board-size">
-        <option value = ""></option>
-        <option value = "12">12</option>
-        <option value = "11">11</option>
-        <option value = "10">10</option>
-        <option value = "9">9</option>
-        <option value = "8">8</option>
-        <option value = "7">7</option>
-        <option value = "6">6</option>
-        <option value = "5">5</option>
-      </select>
+    <section id="start-screen">
+      <h1 id="title">Match-3</h1>
+      <h2 id ="customize-difficulty-message">Customize Difficulty</h2>
+      <div id="game-customization">
+        <label for="board-size">Select board size:</label>
+        <select name = "board-size"  id="board-size-selector">
+          <option value = ""></option>
+          <option value = "12">12x12</option>
+          <option value = "11">11x11</option>
+          <option value = "10">10x10</option>
+          <option value = "9">9x9</option>
+          <option value = "8">8x8</option>
+          <option value = "7">7x7</option>
+          <option value = "6">6x6</option>
+          <option value = "5">5x5</option>
+        </select>
+  
+        <label for="tile-count">Select Number of Tiles</label>
+        <select name = "tile-count" id="tile-count-selector">
+          <option value = ""></option>
+          <option value = "3">3</option>
+          <option value = "4">4</option>
+          <option value = "5">5</option>
+        </select>
+      </div>
 
-      <label for="tile-count">Select Number of Tiles</label>
-      <select name = "tile-count" id = "tile-count">
-        <option value = ""></option>
-        <option value = "3">3</option>
-        <option value = "4">4</option>
-        <option value = "5">5</option>
-      </select>
+      <button id="start-button" type="button">START!</button>
     </section>
 
-    <!-- <section>
-      <h1 class="title">Board size:</h1>
-      <h2>Select board size:</h2>
-      <button class="difficulty-selection" id="3-tiles" type="button">
-        3 Tiles
-      </button>
-      <button class="difficulty-selection" id="4-tiles" type="button">
-        4 Tiles
-      </button>
-      <button class="difficulty-selection" id="5-tiles" type="button">
-        5 Tiles
-      </button>
-    </section> -->
-
-    <section>
+    <section id="game-screen">
       <h1 class="title">Match-3</h1>
       <h2 id="score">Score: 00000</h2>
       <h2 id="moves">Moves left: 010</h2>
-      <h2 id="victory">Goal: 02000</h2>
-      <button class="restart-button-1" type="button">Restart</button>
+      <h2 id="victory">Goal: 100</h2>
+      <button class="restart-button" type="button">Restart</button>
+      <button class="shuffle-button" type="button">Shuffle</button>
 
       <div class="board-container"></div>
 
     </section>
-    <section>
+
+    <section id="victory-screen">
       <h1 id="victory-text">Victory!</h1>
-      <button class="restart-button-2" type="button">Restart</button>
+      <button class="restart-button" type="button">Restart</button>
     </section>
-    <section>
+
+    <section id="game-over-screen">
       <h1 id="game-over-text">Game Over</h1>
-      <button class="restart-button-3" type="button">Restart</button>
+      <button class="restart-button" type="button">Restart</button>
     </section>
   </body>
 </html>

@@ -13,7 +13,11 @@ let selectedTileStored;
 let targetTileStored;
 let tileSwapStateTest = false;
 let restartButtonState = false;
+let horizontalScore = 0;
+let verticalScore = 0;
 let boardSize = 0;
+let score = 0;
+let moves = 20;
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -24,21 +28,15 @@ const board = document.querySelector(".board-container");
 //tile clicks
 const handleSquareClick = (event) => {
 
-  //Safety Check
   if (!event.target.classList.contains("sqr")) {
     return;
   }
-  // console.log(`clicked ${event.target.id}`); 
 
   if (selectedTile === undefined && targetTile === undefined) {
     selectedTile = parseInt(event.target.id);
-    // console.log(selectedTile);
-    // console.log(targetTile);
     
   } else if (selectedTile !== undefined && targetTile === undefined) { 
     targetTile = parseInt(event.target.id);
-    // console.log(selectedTile);
-    // console.log(targetTile); 
     
     const selectedColor = window.getComputedStyle(squares[selectedTile]).backgroundColor;
     const targetColor = window.getComputedStyle(squares[targetTile]).backgroundColor;
@@ -52,12 +50,17 @@ const handleSquareClick = (event) => {
   
     tileSwap(selectedTile, targetTile); 
   
+    //count mismatches but not invalid moves
+    moveCount();    
+
     const match1 = isMatch(selectedTile);
     const match2 = isMatch(targetTile); 
   
     if (!match1 && !match2) {
       console.log("No matches found");
+
       tileSwap(selectedTile, targetTile);
+      
     } else {
       //for chaining
       setTimeout(processBoard, 300); //delay for cascading effect
@@ -124,11 +127,14 @@ const tileSwap = (id1, id2) => {
   
   if (!selectedElement || !targetElement) return;
 
+  //counts moves down to 0
+  if (moves <= 0) return;
+
   if (bounds(id1,id2,boardSize)) {
     const tempColor = selectedElement.style.backgroundColor;
     selectedElement.style.backgroundColor = targetElement.style.backgroundColor;
     targetElement.style.backgroundColor = tempColor;
-    
+
     // console.log(`Swapped colors ${id1} with ${id2}`);
   } else {
     console.log("Invalid Move")
@@ -151,6 +157,12 @@ const bounds = (id1,id2,boardSize) => {
 //function for checking match condition
 const isMatch = (id) => {
   const selectedElement = squares[id];
+
+  //stops isMatch from counting cleared tiles
+  if (selectedElement.style.backgroundColor === "transparent" || selectedElement.style.backgroundColor === "") {
+    return false;
+  }
+
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
   
   // console.log(`the color tile selected is ${referenceTile}`); //check
@@ -183,7 +195,7 @@ const isMatch = (id) => {
   const upId = direction(-boardSize);
   const downId = direction(boardSize);
 
-  //combine horizontal and vertical matched into horizontal and vertical arrays
+  //combine horizontal and vertical matched tiles into horizontal and vertical arrays
   const horizontalMatch = [id , ...leftId , ...rightId];
   const verticalMatch = [id , ...upId , ...downId];
 
@@ -197,20 +209,28 @@ const isMatch = (id) => {
   } 
     
   //clear vertically matched tiles
- if (verticalMatch.length >= 3) { //else was breaking the vertical match check by stopping the function if a horizontal match was detected.
+  if (verticalMatch.length >= 3) { 
     clear = [ ...clear, ...verticalMatch];
   }
+
 
   //filter to remove repeats
   const uniqueTilesToClear = clear.filter((value, index) => {
     return clear.indexOf(value) === index;
   });
+
+  //score counter
+  if (uniqueTilesToClear.length > 0) {
+    score += uniqueTilesToClear.length;
+    console.log(`Score: ${score}`); //check
     
-  //clear tiles
-  uniqueTilesToClear.forEach(tileId => {
-    squares[tileId].style.backgroundColor = "transparent"; 
-  });
-  return uniqueTilesToClear.length > 0; //truthy if tiles are cleared
+    //clear tiles
+    uniqueTilesToClear.forEach(tileId => {
+      squares[tileId].style.backgroundColor = "transparent"; 
+    });
+    return uniqueTilesToClear.length > 0; 
+  }
+  return false;
 }
 
 //UPDATE: function for transparency check in gravity to be more reliable
@@ -282,17 +302,30 @@ const processBoard = () => {
   }
 }
 
+//counter for moves/turns left
+const moveCount = () => {
+
+  if (moves <=0) {
+    console.log("out of moves")
+    return;
+  }
+
+  moves -= 1
+  console.log(`You have ${moves} left.`);
+}
+
   
 //initializes board
 randomizeTiles();
 
 //  TO DO:
-//    1. scoring and turns left for MVP
-//    2. randomize without >3 in rows or columns during initialization
+////  1. scoring and turns left for MVP
+//    1. player initiated shuffle for a bricked board
 //    3. DOM for start screen, victory and game over screens.
 //    4. clean up css styling 
-//    5. animation of swapping and swapping back if match fails
-//    6. manual hints - player initiated
 
 //  stretch goals:
+//    2. randomize without >3 in rows or columns during initialization
+//    5. animation of swapping and swapping back if match fails
+//    6. manual hints - player initiated
 //    7. auto shuffle when out of possible moves

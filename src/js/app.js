@@ -258,6 +258,12 @@ const bounds = (id1,id2,boardSize) => {
 //function for checking match condition
 const isMatch = (id) => {
   const selectedElement = squares[id];
+
+  //stops isMatch from counting cleared tiles
+  if (selectedElement.style.backgroundColor === "transparent" || selectedElement.style.backgroundColor === "") {
+    return false;
+  }
+
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
 
   checkGameState();
@@ -312,6 +318,7 @@ const isMatch = (id) => {
   if (verticalMatch.length >= 3) { 
     clear = [ ...clear, ...verticalMatch];
   }
+
 
   //filter to remove repeats
   const uniqueTilesToClear = clear.filter((value, index) => {

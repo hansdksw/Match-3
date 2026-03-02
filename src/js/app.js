@@ -5,13 +5,14 @@ const squares = [];
 
 /*-------------------------------- Variables --------------------------------*/
 
-let tileSelection = 5; //? To do: to fix tile selection
+let tileSelection = 0; //? To do: to fix tile selection
 let tileCount;
 let selectedTile;
 let targetTile;
 let selectedTileStored;
 let targetTileStored;
-let tileSwapStateTest = false;
+let tileSwapState = false;
+let shuffleButtonState = false;
 let restartButtonState = false;
 let horizontalScore = 0;
 let verticalScore = 0;
@@ -19,16 +20,32 @@ let boardSize = 0;
 let score = 0;
 <<<<<<< HEAD
 let moves = 20;
+<<<<<<< HEAD
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+let boardSizeSelected = false;
+let tileCountSelected = false;
+>>>>>>> c1a63af549f829ac5ff2d546acd02a6b6a5fbd66
 
 /*------------------------ Cached Element References ------------------------*/
 
-const board = document.querySelector(".board-container");
+const boardElement = document.querySelector(".board-container");
+const startScreen = document.getElementById("start-screen");
+const gameScreen = document.getElementById("game-screen");
+const victoryScreen = document.getElementById("victory-screen");
+const gameOverScreen = document.getElementById("game-over-screen");
+const startButtonElement = document.getElementById("start-button");
+const restartButtonElement = document.querySelectorAll(".restart-button");
+const shuffleButtonElement = document.querySelectorAll(".shuffle-button");
+const boardSizeSelectorElement = document.getElementById("board-size-selector");
+const boardSizeOptionElement = document.getElementById("board-size-selector").value;
+const tileCountSelectorElement = document.getElementById("tile-count-selector");
+const tileCountOptionElement = document.getElementById("tile-count-selector").value;
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-//tile clicks
+//handle tile clicks
 const handleSquareClick = (event) => {
 
   if (!event.target.classList.contains("sqr")) {
@@ -38,14 +55,20 @@ const handleSquareClick = (event) => {
   if (selectedTile === undefined && targetTile === undefined) {
     selectedTile = parseInt(event.target.id);
     
+    highlightTile(selectedTile);
+    
   } else if (selectedTile !== undefined && targetTile === undefined) { 
     targetTile = parseInt(event.target.id);
     
+    highlightTile(targetTile);
+
     const selectedColor = window.getComputedStyle(squares[selectedTile]).backgroundColor;
     const targetColor = window.getComputedStyle(squares[targetTile]).backgroundColor;
 
     if (selectedColor === targetColor) {
       console.log("Invalid Move");
+      resetTile(selectedTile);
+      resetTile(targetTile);
       selectedTile = undefined;
       targetTile = undefined;
       return;
@@ -68,24 +91,112 @@ const handleSquareClick = (event) => {
       //for chaining
       setTimeout(processBoard, 300); //delay for cascading effect
     }
-  
+    
     //reset
+    resetTile(selectedTile);
+    resetTile(targetTile);
     selectedTile = undefined;
     targetTile = undefined;
   }
 };
 
-board.addEventListener("click", handleSquareClick);
+// const handleStartClick = () => {
+//   if (!boardSizeSelected || !tileCountSelected) {
+//     alert("Please select board size and number of tiles.")
+//   } else{
+//     startGame();
+//   }
+// }
+
+//handle shuffle button click
+const handleShuffleClick = () =>{
+  if (shuffleButtonState === true) {
+    shuffleButtonState = false;
+  }
+  randomizeTiles();
+  console.log("Shuffled!");  
+}
+
+//handle restart button click
+const handleRestartClick = () =>{
+  if (restartButtonState === true ) {
+    restartButtonState = false;
+  }
+
+  score = 0;
+  moves = 20;
+  resetScreen();
+
+  console.log("Restart!");  
+}
+
+const handleSelectedBoardSize = (event) => {
+  const option = event.target.value;
+  const size = parseInt(option);
+  drawBoard(size);
+  boardSizeSelected = true;
+  console.log("Board size set to:", size);
+} 
+
+const handleSelectedTileCount = (event) => {
+  const option = event.target.value;
+  const noOfTiles = parseInt(option);
+
+  tileSelection = noOfTiles;
+  tileCount = tileColor.slice(0, tileSelection);
+
+  tileCountSelected = true;
+  console.log("Number of tiles set to:", noOfTiles);
+} 
+
+const handleStartClick = () => {
+  if (!boardSizeSelected || !tileCountSelected) {
+    alert("Please select board size and number of tiles.")
+  } else{
+    startGame();
+    randomizeTiles();
+  }
+}
+
+boardElement.addEventListener("click", handleSquareClick);
+startButtonElement.addEventListener("click", handleStartClick);
+shuffleButtonElement.forEach((button) => button.addEventListener("click", handleShuffleClick));
+restartButtonElement.forEach((button) => button.addEventListener("click", handleRestartClick));
+boardSizeSelectorElement.addEventListener("change", handleSelectedBoardSize);
+tileCountSelectorElement.addEventListener("change", handleSelectedTileCount);
+
+
 
 /*-------------------------------- Functions --------------------------------*/
 
-tileCount = tileColor.slice(0, tileSelection);
+const checkGameState = () => {
+  if (moves <= 0) {
+    isGameOver();
+  } else if (score >= 100) {
+    isVictory();
+  }
+}
+
+//function for highlighting selected tiles
+const highlightTile = (tile) => {
+  squares[tile].style.border = "1px solid cyan"
+}
+
+//function for resetting selected tile
+const resetTile = (tile) => {
+  squares[tile].style.border = "1px solid black"
+}
+
 
 //function for drawing dynamic game board
 const drawBoard = (size) => {
   boardSize = size;
 
-  board.style.width = `${(50 + 2) * boardSize}px`;
+  //resets all edited states for the container and the array
+  boardElement.innerHTML = "";
+  squares.length = 0;
+
+  boardElement.style.width = `${(50 + 2) * boardSize}px`;
   
   let fragment = new DocumentFragment();
   fragment = document.createDocumentFragment();
@@ -99,10 +210,10 @@ const drawBoard = (size) => {
     squares.push(square);
   }
   
-  board.appendChild(fragment);
+  boardElement.appendChild(fragment);
 };
     
-drawBoard(6); //! change board size here
+// drawBoard(6); //! change board size here
 
 //function for randomizing the tiles on the board
 const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjacent spots
@@ -112,16 +223,7 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
   });
 };
 
-const restartButtonElement = document.querySelector(".restart-button-1");
   
-//function for restarting the game
-restartButtonElement.addEventListener("click", () => {
-  if (restartButtonState === true) {
-    restartButtonState = false;
-  }
-  randomizeTiles();
-  console.log("restart!");
-});
 
 //function for swapping
 const tileSwap = (id1, id2) => {
@@ -145,6 +247,7 @@ const tileSwap = (id1, id2) => {
 }
 
 //axis & boundary check - separated boundary checks from swap function for reusability
+//adaptation of the manhattan distance to check for matches in the same axis and that the swaps are made with orthogonally adjacent tiles.
 const bounds = (id1,id2,boardSize) => { 
 
   const row1 = Math.floor(id1 / boardSize);
@@ -157,6 +260,7 @@ const bounds = (id1,id2,boardSize) => {
   return isVerticallyAdjacent || isHorizontallyAdjacent;
 }
 
+//! to fix generating more than 2 same color tiles in a row/column and tileSwap Bug, consider removing tile clearing from isMatch and making it a separate function.
 //function for checking match condition
 const isMatch = (id) => {
   const selectedElement = squares[id];
@@ -167,8 +271,13 @@ const isMatch = (id) => {
   }
 
   const referenceTile = window.getComputedStyle(selectedElement).backgroundColor; // window.getComputedStyle() to get a value that will be used later for comparison.
-  
-  // console.log(`the color tile selected is ${referenceTile}`); //check
+
+  checkGameState();
+
+  //stops isMatch from counting cleared tiles
+  if (selectedElement.style.backgroundColor === "transparent" || selectedElement.style.backgroundColor === "") {
+    return false;
+  }
   
   const direction = (step) => {
     let currentTile = id + step;
@@ -201,8 +310,8 @@ const isMatch = (id) => {
   //combine horizontal and vertical matched tiles into horizontal and vertical arrays
   const horizontalMatch = [id , ...leftId , ...rightId];
   const verticalMatch = [id , ...upId , ...downId];
+  
 
- 
   //to receive id of matched tiles
   let clear = []; 
 
@@ -243,7 +352,7 @@ const isHole = (element) => {
 }
 
 //function for gravity
-const gravity = () => {
+const applyGravity = () => {
   let cascade = true;
 
   //keeps running till no empty tiles are found
@@ -255,26 +364,25 @@ const gravity = () => {
       const currentTile = squares[i];
 
       //check for cleared tiles
-      if (currentTile.style.backgroundColor === "transparent"){
+      
         
-        if (isHole(currentTile)) {
-          
-          //for 'tiles' that come before the start of the array (all spaces above the board)
-          if (i < boardSize) {
-            const randomTile = tileColor[Math.floor(Math.random() * tileColor.length)]
+      if (isHole(currentTile)) {
+        
+        //for 'tiles' that come before the start of the array (all spaces above the board)
+        if (i < boardSize) {
+          const randomTile = tileColor[Math.floor(Math.random() * tileColor.length)]
             currentTile.style.backgroundColor = randomTile;
-            cascade = true;
-          }
+          cascade = true;
+        }
   
-          else {
-            const tileAbove = squares[i - boardSize];
-            
-            //check for transparent tiles and cascade
-            if (tileAbove.style.backgroundColor !== "transparent") {
-              currentTile.style.backgroundColor =  tileAbove.style.backgroundColor;
-              tileAbove.style.backgroundColor = "transparent";
-              cascade = true;
-            }
+        else {
+          const tileAbove = squares[i - boardSize];
+          
+          //check for transparent tiles and cascade
+          if (tileAbove.style.backgroundColor !== "transparent") {
+            currentTile.style.backgroundColor =  tileAbove.style.backgroundColor;
+            tileAbove.style.backgroundColor = "transparent";
+            cascade = true;
           }
         }
       }
@@ -282,7 +390,7 @@ const gravity = () => {
   }
 }
 
-//another global match check created to deal with gravity
+//another global match check created to deal with applyGravity
 const matchCheck = () => {
   let hasMatches = false;
 
@@ -296,7 +404,7 @@ const matchCheck = () => {
 
 //scan and process game board using gravity and match check.
 const processBoard = () => {
-  gravity();
+  applyGravity();
   
   const newMatches = matchCheck();
 
@@ -317,9 +425,50 @@ const moveCount = () => {
   console.log(`You have ${moves} left.`);
 }
 
-  
+//victory condition
+const isVictory = (score) => {
+  // if (score >= 200) {
+    startScreen.style.display = "none";
+    gameScreen.style.display = "none";
+    victoryScreen.style.display = "flex";
+    gameOverScreen.style.display = "none";
+  // }
+}
+
+//game over condition
+const isGameOver = () => {
+  // if (moves <= 0) {
+    startScreen.style.display = "none";
+    gameScreen.style.display = "none";
+    victoryScreen.style.display = "none";
+    gameOverScreen.style.display = "flex";
+  // }
+}
+
+//game screen from start screen
+const startGame = () => {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "flex";
+  victoryScreen.style.display = "none";
+  gameOverScreen.style.display = "none";
+}
+
+const resetScreen = () => {
+  startScreen.style.display = "flex";  
+  gameScreen.style.display = "none";
+  victoryScreen.style.display = "none";
+  gameOverScreen.style.display = "none";
+}
+
+// startGame();
+// isVictory();
+// isGameOver();
+// resetScreen();
+
 //initializes board
 randomizeTiles();
+
+
 
 //  TO DO:
 ////  1. scoring and turns left for MVP

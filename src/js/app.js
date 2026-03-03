@@ -19,7 +19,7 @@ let horizontalScore = 0;
 let verticalScore = 0;
 let boardSize = 0;
 let score = 0;
-let moves = 20;
+let moves = 10;
 let boardSizeSelected = false;
 let tileCountSelected = false;
 
@@ -37,6 +37,8 @@ const boardSizeSelectorElement = document.getElementById("board-size-selector");
 const boardSizeOptionElement = document.getElementById("board-size-selector").value;
 const tileCountSelectorElement = document.getElementById("tile-count-selector");
 const tileCountOptionElement = document.getElementById("tile-count-selector").value;
+const scoreElement = document.getElementById("score");
+const movesElement = document.getElementById("moves");
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -119,8 +121,10 @@ const handleRestartClick = () =>{
   }
 
   score = 0;
-  moves = 20;
+  moves = 10;
   resetScreen();
+  scoreElement.innerText = `Score: 0`;
+  movesElement.innerText = `Moves left: 10`;
 
   console.log("Restart!");  
 }
@@ -207,8 +211,6 @@ const drawBoard = (size) => {
   
   boardElement.appendChild(fragment);
 };
-    
-// drawBoard(6); //! change board size here
 
 //function for randomizing the tiles on the board
 const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjacent spots
@@ -217,8 +219,6 @@ const randomizeTiles = () => { //! figure out how to ensure less than 3 in adjac
     square.style.backgroundColor = tileColor[randomTile];
   });
 };
-
-  
 
 //function for swapping
 const tileSwap = (id1, id2) => {
@@ -320,7 +320,6 @@ const isMatch = (id) => {
     clear = [ ...clear, ...verticalMatch];
   }
 
-
   //filter to remove repeats
   const uniqueTilesToClear = clear.filter((value, index) => {
     return clear.indexOf(value) === index;
@@ -329,6 +328,7 @@ const isMatch = (id) => {
   //score counter
   if (uniqueTilesToClear.length > 0) {
     score += uniqueTilesToClear.length;
+    scoreElement.innerText = `Score: ${score}`;
     console.log(`Score: ${score}`); //check
     
     //clear tiles
@@ -417,6 +417,7 @@ const moveCount = () => {
   }
 
   moves -= 1
+  movesElement.innerText = `Moves left: ${moves}`;
   console.log(`You have ${moves} left.`);
 }
 
@@ -467,8 +468,9 @@ randomizeTiles();
 
 //  TO DO:
 ////  1. scoring and turns left for MVP
-//    1. player initiated shuffle for a bricked board
-//    3. DOM for start screen, victory and game over screens.
+////  1. player initiated shuffle for a bricked board
+////    3. DOM for start screen, victory and game over screens.
+// DOM for score, moves and goal
 //    4. clean up css styling 
 
 //  stretch goals:

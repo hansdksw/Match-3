@@ -115,10 +115,6 @@ body {
     justify-content: center;
 }
 
-label {
-    margin: 8 auto;
-}
-
 .restart-button {
     display: inline;
     margin: 16 auto;

@@ -11,6 +11,7 @@
   </head>
   <body>
     <section id="start-screen">
+
       <h1 id="title">
         <span class="letter1">M</span>
         <span class="letter2">A</span>
@@ -21,7 +22,7 @@
         <span class="letter7">3</span>
       </h1>
 
-      <label for="board-size">Select board size:</label>
+      <label for="board-size-selector">Select board size:</label>
       <div class="nes-select">
         <select name = "board-size" required id="board-size-selector">
           <option value = "" selected hidden>Select...</option>
@@ -35,7 +36,8 @@
           <option value = "12">12x12</option>
         </select>
       </div>
-      <label for="tile-count">Select Number of Tiles</label>
+
+      <label for="tile-count-selector">Select Number of Tiles</label>
       <div class="nes-select">
         <select name = "tile-count" required id="tile-count-selector">
           <option value = "" selected hidden>Select ...</option>
@@ -44,9 +46,11 @@
           <option value = "5">5</option>
         </select>
       </div>
+
       <div class="start-button-div">
         <button class="nes-btn" id="start-button" type="button">START!</button>
       </div>
+
     </section>
 
     <section id="game-screen">

@@ -119,12 +119,12 @@ body {
 
 .restart-button {
     display: inline;
-    margin: 16 auto;
+    margin-bottom: 20;
 }
 
 .shuffle-button {
     display: inline;
-    margin: 16 auto;
+    margin-bottom: 20;
 }
 
 #score {

@@ -143,7 +143,7 @@ const handleSelectedTileCount = (event) => {
 
 const handleStartClick = () => {
   if (!boardSizeSelected || !tileCountSelected) {
-    alert("Please select board size and number of tiles.")
+    return;
   } else{
     startGame();
     randomizeTiles();
@@ -169,7 +169,7 @@ const checkGameState = () => {
 
 //function for highlighting selected tiles
 const highlightTile = (tile) => {
-  squares[tile].style.border = "3px solid cyan"
+  squares[tile].style.border = "2px solid cyan"
 }
 
 //function for resetting selected tile

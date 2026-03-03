@@ -1,7 +1,23 @@
 # Match-3 - Core mechanics only
 
-![](./img/)
+![Image of Match 3 Title](./img/match-3-title.png)
 
+Match-3 games are a genre of puzzle games where players must manipulate tiles or items on a grid with the goal of forming matches of 3 or more within the horizontal and/or vertical axes.
+
+The core gameplay mechanics of a Match-3 game are:
+1. Players swap adjacent tiles to form horizontal and/or vertical matches.
+2. Matched tiles are cleared off the board allowing for more boards allowing new, random tiles to fall into the grid.
+3. New tiles can form matches which are also cleared.
+4. The goals of Match-3 games can vary between the different titles. 
+    Specific Match-3 goals:
+    - Clearing a specified number of tiles
+    - Earning a specified number of points
+    - Earning a specified number of points within a time limit or a turn limit
+    Game Over conditions:
+    - Running out of time before a specific number of tiles are cleared and/or a specific score is reached
+    - Running out of turns before a specific number of tiles are cleared and/or a specific score is reached
+
+[Link to Match-3 game](https://hansdksw.github.io/Match-3/)
 
 ## MVP
 - Game board with size option for difficulty scaling. (Generates game boards of different sizes)
@@ -82,5 +98,21 @@ Return tiles to original positions
 
 ![An image of swapped tiles returning to their original positions.](/img/4a.1-Return-tiles-to-original-positions.png)
 
-## References 
+## Attributions
+[NES CSS framework](https://nostalgic-css.github.io/NES.css/#)
+[Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P/license)
 
+
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
+
+## Stretch Goals
+1. Randomize without getting more than 3 in rows or columns during initialization
+2. Animation of swapping and swapping back if match fails
+3. Manual hints - player initiated
+4. Automatic shuffle when out of possible moves
+
+## References
+[References](./references.md)

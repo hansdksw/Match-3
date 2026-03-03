@@ -1,5 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
 
+
 const tileColor = ["red", "green", "blue", "yellow", "purple"];
 const squares = [];
 
@@ -18,15 +19,9 @@ let horizontalScore = 0;
 let verticalScore = 0;
 let boardSize = 0;
 let score = 0;
-<<<<<<< HEAD
 let moves = 20;
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/main
-=======
 let boardSizeSelected = false;
 let tileCountSelected = false;
->>>>>>> c1a63af549f829ac5ff2d546acd02a6b6a5fbd66
 
 /*------------------------ Cached Element References ------------------------*/
 

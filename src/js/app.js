@@ -15,11 +15,10 @@ let targetTileStored;
 let tileSwapState = false;
 let shuffleButtonState = false;
 let restartButtonState = false;
-let horizontalScore = 0;
-let verticalScore = 0;
 let boardSize = 0;
 let score = 0;
 let moves = 10;
+let goal = 0;
 let boardSizeSelected = false;
 let tileCountSelected = false;
 
@@ -39,6 +38,7 @@ const tileCountSelectorElement = document.getElementById("tile-count-selector");
 const tileCountOptionElement = document.getElementById("tile-count-selector").value;
 const scoreElement = document.getElementById("score");
 const movesElement = document.getElementById("moves");
+const goalElement = document.getElementById("victory");
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -133,6 +133,7 @@ const handleSelectedBoardSize = (event) => {
   const option = event.target.value;
   const size = parseInt(option);
   drawBoard(size);
+  isGoal(size);
   boardSizeSelected = true;
   console.log("Board size set to:", size);
 } 
@@ -164,8 +165,6 @@ restartButtonElement.forEach((button) => button.addEventListener("click", handle
 boardSizeSelectorElement.addEventListener("change", handleSelectedBoardSize);
 tileCountSelectorElement.addEventListener("change", handleSelectedTileCount);
 
-
-
 /*-------------------------------- Functions --------------------------------*/
 
 const checkGameState = () => {
@@ -178,7 +177,7 @@ const checkGameState = () => {
 
 //function for highlighting selected tiles
 const highlightTile = (tile) => {
-  squares[tile].style.border = "1px solid cyan"
+  squares[tile].style.border = "3px solid cyan"
 }
 
 //function for resetting selected tile
@@ -195,7 +194,7 @@ const drawBoard = (size) => {
   boardElement.innerHTML = "";
   squares.length = 0;
 
-  boardElement.style.width = `${(50 + 2) * boardSize}px`;
+  boardElement.style.width = `${(50 * boardSize) + 8}px`;
   
   let fragment = new DocumentFragment();
   fragment = document.createDocumentFragment();
@@ -456,10 +455,33 @@ const resetScreen = () => {
   gameOverScreen.style.display = "none";
 }
 
-// startGame();
-// isVictory();
-// isGameOver();
-// resetScreen();
+const isGoal = (size) => {
+  if (size === 12) {
+    goal = 400;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 11) {
+    goal = 350;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 10) {
+    goal = 300;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 9) {
+    goal = 250;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size=== 8) {
+    goal = 200;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 7) {
+    goal = 150;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 6) {
+    goal = 100;
+    goalElement.innerText = `Goal: ${goal}`;
+  } else if (size === 5) {
+    goal = 80;
+    goalElement.innerText = `Goal: ${goal}`;
+  }
+}
 
 //initializes board
 randomizeTiles();

@@ -3,47 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
     <link rel="stylesheet" href="./src/css/style.css" />
     <script defer src="./src/js/app.js"></script>
     <title>Match-3</title>
   </head>
   <body>
     <section id="start-screen">
-      <h1 id="title">Match-3</h1>
-      <h2 id ="customize-difficulty-message">Customize Difficulty</h2>
-      <div id="game-customization">
-        <label for="board-size">Select board size:</label>
-        <select name = "board-size"  id="board-size-selector">
-          <option value = ""></option>
-          <option value = "12">12x12</option>
-          <option value = "11">11x11</option>
-          <option value = "10">10x10</option>
-          <option value = "9">9x9</option>
-          <option value = "8">8x8</option>
-          <option value = "7">7x7</option>
-          <option value = "6">6x6</option>
+      <h1 id="title">
+        <span class="letter1">M</span>
+        <span class="letter2">A</span>
+        <span class="letter3">T</span>
+        <span class="letter4">C</span>
+        <span class="letter5">H</span>
+        <span class="letter6">-</span>
+        <span class="letter7">3</span>
+      </h1>
+      <!-- <h2 id ="customize-difficulty-message">Customize Difficulty</h2> -->
+
+      <label for="board-size">Select board size:</label>
+      <div class="nes-select">
+        <select name = "board-size" required id="board-size-selector">
+          <option value = "" selected hidden>Select...</option>
           <option value = "5">5x5</option>
+          <option value = "6">6x6</option>
+          <option value = "7">7x7</option>
+          <option value = "8">8x8</option>
+          <option value = "9">9x9</option>
+          <option value = "10">10x10</option>
+          <option value = "11">11x11</option>
+          <option value = "12">12x12</option>
         </select>
-  
-        <label for="tile-count">Select Number of Tiles</label>
-        <select name = "tile-count" id="tile-count-selector">
-          <option value = ""></option>
+      </div>
+      <label for="tile-count">Select Number of Tiles</label>
+      <div class="nes-select">
+        <select name = "tile-count" required id="tile-count-selector">
+          <option value = "" selected hidden>Select ...</option>
           <option value = "3">3</option>
           <option value = "4">4</option>
           <option value = "5">5</option>
         </select>
       </div>
-
-      <button id="start-button" type="button">START!</button>
+      <div class="start-button-div">
+        <button class="nes-btn" id="start-button" type="button">START!</button>
+      </div>
     </section>
 
     <section id="game-screen">
-      <h1 class="title">Match-3</h1>
-      <h2 id="score">Score: 0</h2>
-      <h2 id="moves">Moves left: 010</h2>
-      <h2 id="victory">Goal: 100</h2>
-      <button class="restart-button" type="button">Restart</button>
-      <button class="shuffle-button" type="button">Shuffle</button>
+      <h1 id="game-screen-title">Match-3</h1>
+      <div id="score-moves-display">
+        <h2 id="score">Score: 0</h2>
+        <h2 id="victory">Goal: 100</h2>
+      </div>
+      <h2 id="moves">Moves left: 010</h2>  
+      <div class = "game-page-buttons">
+        <button class="nes-btn restart-button" type="button">Restart</button>
+        <button class="nes-btn shuffle-button" type="button">Shuffle</button>
+      </div>
 
       <div class="board-container"></div>
 
@@ -51,12 +68,12 @@
 
     <section id="victory-screen">
       <h1 id="victory-text">Victory!</h1>
-      <button class="restart-button" type="button">Restart</button>
+      <button class="nes-btn restart-button" type="button">Restart</button>
     </section>
 
     <section id="game-over-screen">
       <h1 id="game-over-text">Game Over</h1>
-      <button class="restart-button" type="button">Restart</button>
+      <button class="nes-btn restart-button">Restart</button>
     </section>
   </body>
 </html>

@@ -1,5 +1,6 @@
 body {
-    background-color: #D9D9D9;
+    background-color: #F1F2ED;
+    margin: 0;
 }
 
 #title {
@@ -9,7 +10,7 @@ body {
 
 #customize-difficulty-message {
     text-align: center;
-    font-size: 40px;
+    font-size: 36px;
 }
 
 #game-customization {
@@ -25,21 +26,29 @@ body {
 .board-container {
     display: flex;
     flex-wrap: wrap;
-    justify-self: center;
-    align-self: center;
-    aspect-ratio: 1/1;
-    border: 1px solid black;
+    padding: 0;
     background-color: white;
+    border: 4px solid black;
+    box-sizing:border-box;
+    aspect-ratio: 1/1;
+    
+    /* justify-self: center;
+    align-self: center;
+    width: max-content;
+    max-width: none; */
 }
+
 .sqr {
     display: grid;
-    flex-wrap: wrap;
     background-color: white;
     width: 50px;
-    aspect-ratio: 1/1;
+    height: 50px;
+    flex: 0 0 50px;
     padding: 0;
-    border: 1px solid black; 
-    align-items: center;
+    border: 2px solid black; 
+    box-sizing: border-box;
+    flex-shrink: 0;
+    align-items: center;  
 }
 
 #start-screen {
@@ -74,5 +83,98 @@ body {
     min-height: 100vh; 
 }
 
+.nes-select {
+    width: 560;
+    margin: 0 auto;
+}
 
+.nes-select select {
+    display: inline-block;
+    width: 560px;
+    min-width: 40px;
+    margin: 4 auto;
+}
 
+.nes-btn {
+    margin: 4 auto;
+    padding: 0;
+}
+
+.start-button-div {
+    margin: 16 auto;
+    padding: 2;
+}
+
+#board-size-selector {
+    margin: 8 auto;
+}
+
+#tile-count-selector {
+    margin: 8 auto;
+}
+
+label {
+    margin: 8 auto;
+}
+
+.restart-button {
+    display: inline;
+    margin: 16 auto;
+}
+
+.shuffle-button {
+    display: inline;
+    margin: 16 auto;
+    justify-content: right;
+}
+
+#score {
+    display: inline-block;
+    font-size: 20px;
+}
+
+#moves {
+    font-size: 20px;
+}
+
+#victory {
+    display: inline-block;
+    font-size: 20px;
+}
+
+#game-screen-title {
+    font-size: 40;
+}
+
+.letter1 {
+    color:red;
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter2 {
+    color: green;
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter3 {
+    color:blue;
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter4 {
+    color:yellow;
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter5 {
+    color:purple;
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter6 {
+    text-shadow: 8px 8px #8A8988;
+}
+
+.letter7 {
+    text-shadow: 8px 8px #8A8988;
+}

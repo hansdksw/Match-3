@@ -196,7 +196,7 @@ const drawBoard = (size) => {
     square.classList.add("sqr");
     square.setAttribute("id", i);
     
-    fragment.appendChild(square); //DocumentFragment to speed up grid generation time https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment/append
+    fragment.appendChild(square); //DocumentFragment to speed up grid generation time
     squares.push(square);
   }
   

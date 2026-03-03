@@ -1,5 +1,8 @@
 # Match-3 - Core mechanics only
 
+![](./img/)
+
+
 ## MVP
 - Game board with size option for difficulty scaling. (Generates game boards of different sizes)
 - Generates randomly placed tiles. 

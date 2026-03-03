@@ -97,14 +97,6 @@ const handleSquareClick = (event) => {
   }
 };
 
-// const handleStartClick = () => {
-//   if (!boardSizeSelected || !tileCountSelected) {
-//     alert("Please select board size and number of tiles.")
-//   } else{
-//     startGame();
-//   }
-// }
-
 //handle shuffle button click
 const handleShuffleClick = () =>{
   if (shuffleButtonState === true) {
@@ -422,22 +414,18 @@ const moveCount = () => {
 
 //victory condition
 const isVictory = (score) => {
-  // if (score >= 200) {
     startScreen.style.display = "none";
     gameScreen.style.display = "none";
     victoryScreen.style.display = "flex";
     gameOverScreen.style.display = "none";
-  // }
 }
 
 //game over condition
 const isGameOver = () => {
-  // if (moves <= 0) {
     startScreen.style.display = "none";
     gameScreen.style.display = "none";
     victoryScreen.style.display = "none";
     gameOverScreen.style.display = "flex";
-  // }
 }
 
 //game screen from start screen
@@ -485,18 +473,3 @@ const isGoal = (size) => {
 
 //initializes board
 randomizeTiles();
-
-
-
-//  TO DO:
-////  1. scoring and turns left for MVP
-////  1. player initiated shuffle for a bricked board
-////    3. DOM for start screen, victory and game over screens.
-// DOM for score, moves and goal
-//    4. clean up css styling 
-
-//  stretch goals:
-//    2. randomize without >3 in rows or columns during initialization
-//    5. animation of swapping and swapping back if match fails
-//    6. manual hints - player initiated
-//    7. auto shuffle when out of possible moves

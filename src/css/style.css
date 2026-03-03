@@ -84,7 +84,8 @@ body {
 }
 
 .nes-select {
-    width: 560;
+    display: inline-block;
+    width: auto;
     margin: 0 auto;
 }
 
@@ -92,7 +93,6 @@ body {
     display: inline-block;
     width: 560px;
     min-width: 40px;
-    margin: 4 auto;
 }
 
 .nes-btn {
@@ -107,10 +107,12 @@ body {
 
 #board-size-selector {
     margin: 8 auto;
+    justify-content: center;
 }
 
 #tile-count-selector {
     margin: 8 auto;
+    justify-content: center;
 }
 
 label {
@@ -125,7 +127,6 @@ label {
 .shuffle-button {
     display: inline;
     margin: 16 auto;
-    justify-content: right;
 }
 
 #score {

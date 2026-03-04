@@ -99,7 +99,7 @@ Return tiles to original positions
 ![An image of swapped tiles returning to their original positions.](/img/4a.1-Return-tiles-to-original-positions.png)
 
 ## Attributions
-[NES CSS framework](https://nostalgic-css.github.io/NES.css/#)
+[NES CSS framework](https://nostalgic-css.github.io/NES.css/#)\
 [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P/license)
 
 
